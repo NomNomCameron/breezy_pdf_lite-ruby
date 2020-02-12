@@ -13,7 +13,7 @@ module BreezyPDFLite
 
     def call
       if (200..299).cover?(app_response_status) # Did the app respond well?
-        Intercept::HTML.new(app_response_body).call # Try to return a PDF
+        Intercept::HTML.new(app_response_body, env).call # Try to return a PDF
       else
         app_response # Bad app response, just send respond with that
       end

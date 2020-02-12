@@ -3,10 +3,11 @@
 module BreezyPDFLite::Intercept
   # :nodoc
   class Base
-    attr_reader :body
+    attr_reader :body, :env
 
-    def initialize(body)
+    def initialize(body, env)
       @body = body
+      @env = env
     end
   end
 end

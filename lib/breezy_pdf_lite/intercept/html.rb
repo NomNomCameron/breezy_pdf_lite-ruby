@@ -25,10 +25,24 @@ module BreezyPDFLite::Intercept
     end
 
     def response_headers
-      @response_headers ||= {
+      headers = {
         "Content-Type" => "application/pdf",
         "Content-Disposition" => render_request.response.header["Content-Disposition"]
       }
+
+      headers["Set-Cookie"] = download_key if download_key
+
+      @response_headers ||= headers
+    end
+
+    def download_key
+      key = Rack::Utils.parse_query(env["QUERY_STRING"])["download_key"]
+
+      return false unless key
+
+      expires = (Time.now.utc + (60 * 10)).strftime("%a, %e %b %Y %H:%M:%S GMT")
+      timestamp = Time.now.utc.to_i
+      "breezy_pdf_downloaded_#{key}=#{timestamp}; Expires=#{expires}"
     end
   end
 end
