@@ -42,7 +42,7 @@ module BreezyPDFLite::Intercept
 
       expires = (Time.now.utc + (60 * 10)).strftime("%a, %e %b %Y %H:%M:%S GMT")
       timestamp = Time.now.utc.to_i
-      "breezy_pdf_downloaded_#{key}=#{timestamp}; Expires=#{expires}"
+      "breezy_pdf_downloaded_#{key}=#{timestamp}; Expires=#{expires}; Path=/"
     end
   end
 end
